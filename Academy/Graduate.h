@@ -1,12 +1,10 @@
-// Academy
+#pragma once
 #include"Human.h"
 #include"Student.h"
-
 
 #include<iostream>
 #include<string>
 #include<ctime>
-
 using namespace std;
 using std::cin;
 using std::cout;
@@ -18,20 +16,22 @@ using std::endl;
 #define STUDENT_TAKE_PARAMETERS const std::string& speciality, const std::string& group, double rating, double attendance
 #define STUDENT_GIVE_PARAMETERS speciality, group, rating, attendance
 
-#define TEACHER_TAKE_PARAMETERS const std::string& speciality, unsigned int experience
-#define TEACHER_GIVE_PARAMETERS speciality, experience
-
-void main()
+class Graduate :public Student
 {
-	setlocale(LC_ALL, "");
+	std::string subject;
 
-	Human hm("Тупенко", "Василий", 18);
-	hm.print();
-	Student st("Pinkman", "Jessie", 28, "Chemistry", "WW_01", 90, 85);
-	st.print();
-	Teacher t("White", "Walter", 50, "Chemistry", 20);
-	t.print();
-	Graduate gr("Shrader", "Hulk", 40, "Criminalistic", "OBN", 90, 90, "How to catch Heisenberg");
-	gr.print();
+public:
 
-}
+	const std::string& get_subject()const;
+	void set_subject(const std::string& subject);
+
+	//			Constructors:
+
+	Graduate(HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS, const std::string& subject) :Student(HUMAN_GIVE_PARAMETERS, STUDENT_GIVE_PARAMETERS);
+
+	~Graduate();
+
+	//				Methods:
+
+	void print()const;
+};
