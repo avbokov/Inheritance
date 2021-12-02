@@ -1,4 +1,4 @@
-#include<iostream>
+п»ї#include<iostream>
 #include<string>
 #include<ctime>
 using namespace std;
@@ -73,7 +73,7 @@ public:
 #define STUDENT_TAKE_PARAMETERS const std::string& speciality, const std::string& group, double rating, double attendance
 #define STUDENT_GIVE_PARAMETERS speciality, group, rating, attendance
 
-class Student:public Human // показываем компилятору, что хотим унаследовать все свой ства класса Human 
+class Student:public Human // РїРѕРєР°Р·С‹РІР°РµРј РєРѕРјРїРёР»СЏС‚РѕСЂСѓ, С‡С‚Рѕ С…РѕС‚РёРј СѓРЅР°СЃР»РµРґРѕРІР°С‚СЊ РІСЃРµ СЃРІРѕР№ СЃС‚РІР° РєР»Р°СЃСЃР° Human 
 {
 	std::string speciality;
 	std::string group;
@@ -242,7 +242,7 @@ void main()
 	setlocale(LC_ALL, "");
 
 #ifdef INHERITANCE_CHECK
-	Human hm("Тупенко", "Василий", 18);
+	Human hm("РўСѓРїРµРЅРєРѕ", "Р’Р°СЃРёР»РёР№", 18);
 	hm.print();
 	Student st("Pinkman", "Jessie", 28, "Chemistry", "WW_01", 90, 85);
 	st.print();
@@ -252,7 +252,7 @@ void main()
 	gr.print();
 #endif // INHERITANCE_CHECK
 
-	// Generalisation (обобщение);
+	// Generalisation (РѕР±РѕР±С‰РµРЅРёРµ);
 
 	Human* group[] =
 	{
