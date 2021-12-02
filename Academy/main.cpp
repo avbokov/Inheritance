@@ -1,6 +1,8 @@
 ﻿#include<iostream>
 #include<string>
 #include<ctime>
+#include<iomanip>
+
 using namespace std;
 using std::cin;
 using std::cout;
@@ -64,11 +66,32 @@ public:
 
 	//				Methods:
 
-	virtual void print()const
+	virtual std::ostream& print(std::ostream& os)const
 	{
-		cout << last_name << " " << first_name << " " << age << endl;
+		//return os << last_name << " " << first_name << " " << age;
+		//os.width(15);		// задаёт ширину выводимого поля
+		//os << std::left;	// задаёт выравнивание выводимого поля
+		//os << last_name;
+		//os.width(10);
+		//os << std::left;
+		//os << first_name;
+		//os.width(5);
+		//os << std::right;
+		//os << age;
+		//return os;
+		return os 
+			// #include<iomanip>
+			<< std::setw(15) << std::left << last_name
+			<< std::setw(10) << std::left << first_name
+			<< std::setw(5) << std::right << age;
+
 	}
 };
+
+std::ostream& operator<<(std::ostream& os, const Human& obj)
+{
+	return obj.print(os);
+}
 
 #define STUDENT_TAKE_PARAMETERS const std::string& speciality, const std::string& group, double rating, double attendance
 #define STUDENT_GIVE_PARAMETERS speciality, group, rating, attendance
@@ -138,10 +161,14 @@ public:
 
 	//				Methods:
 
-	void print()const
+	std::ostream& print(std::ostream& os)const
 	{
-		Human::print();
-		cout << speciality + " " + group << " " << rating << " " << attendance << endl;
+		//return Human::print(os) << " " << speciality + " " + group << " " << rating << " " << attendance;
+		return Human::print(os) << " "
+			<< std::setw(25) << std::left << speciality
+			<< std::setw(10) << std::left << group
+			<< std::setw(5) << std::right << rating
+			<< std::setw(5) << std::right << attendance;
 	}
 
 };
@@ -188,10 +215,12 @@ public:
 
 	//				Methods:
 
-	void print()const
+	std::ostream& print(std::ostream& os)const
 	{
-		Human::print();
-		cout << speciality << " " << experience << endl;
+		//return Human::print(os) << " " << speciality << " " << experience;
+		return Human::print(os) << " "
+			<< std::setw(35) << std::left << speciality
+			<< std::setw(5) << std::right << experience;
 	}
 
 };
@@ -227,10 +256,9 @@ public:
 
 	//				Methods:
 
-	void print()const
+	std::ostream& print(std::ostream& os)const
 	{
-		Student::print();
-		cout << subject << endl;
+		return Student::print(os) << " " << subject;
 	}
 
 };
@@ -268,9 +296,10 @@ void main()
 	// Specialisation
 	for (int i = 0; i < sizeof(group) / sizeof(Human*); i++)
 	{
-		group[i]->print();
-		cout << "\n--------------------------------\n";
+		//group[i]->print();
+		cout << *group[i] << endl;
 	}
+	cout << "\n--------------------------------\n";
 
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{
