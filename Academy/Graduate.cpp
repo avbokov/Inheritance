@@ -1,6 +1,4 @@
 #include"Graduate.h"
-#include"Human.h"
-#include"Student.h"
 
 const std::string& Graduate::get_subject()const
 {

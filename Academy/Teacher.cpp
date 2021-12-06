@@ -1,5 +1,4 @@
 #include"Teacher.h"
-#include"Human.h"
 
 const std::string& Teacher::get_speciality()const
 {

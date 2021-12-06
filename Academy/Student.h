@@ -9,8 +9,6 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-#define HUMAN_TAKE_PARAMETERS const std::string& last_name, const std::string& first_name, unsigned int age
-#define HUMAN_GIVE_PARAMETERS last_name, first_name, age
 #define STUDENT_TAKE_PARAMETERS const std::string& speciality, const std::string& group, double rating, double attendance
 
 class Student :public Human // показываем компилятору, что хотим унаследовать все свой ства класса Human 
@@ -32,7 +30,7 @@ public:
 
 	//				Constructors:
 
-	Student(HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS) :Human(HUMAN_GIVE_PARAMETERS);
+	Student(HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS);
 	~Student();
 
 	//				Methods:

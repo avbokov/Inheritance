@@ -7,6 +7,9 @@ using std::cin;
 using std::cout;
 using std::endl;
 
+#define HUMAN_TAKE_PARAMETERS const std::string& last_name, const std::string& first_name, unsigned int age
+#define HUMAN_GIVE_PARAMETERS last_name, first_name, age
+
 class Human
 {
 	std::string last_name;
