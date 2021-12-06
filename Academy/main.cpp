@@ -82,9 +82,9 @@ public:
 		//return os;
 		return os 
 			// #include<iomanip>
-			<< std::setw(15) << std::left << last_name
-			<< std::setw(10) << std::left << first_name
-			<< std::setw(5) << std::right << age;
+			<< std::setw(15) << std::left << last_name << "|"
+			<< std::setw(10) << std::left << first_name << "|"
+			<< std::setw(5) << std::right << age << "|";
 
 	}
 };
@@ -166,10 +166,10 @@ public:
 	{
 		//return Human::print(os) << " " << speciality + " " + group << " " << rating << " " << attendance;
 		return Human::print(os) << " "
-			<< std::setw(25) << std::left << speciality
-			<< std::setw(10) << std::left << group
-			<< std::setw(5) << std::right << rating
-			<< std::setw(5) << std::right << attendance;
+			<< std::setw(25) << std::left << speciality << "|"
+			<< std::setw(10) << std::left << group << "|"
+			<< std::setw(5) << std::right << rating << "|"
+			<< std::setw(5) << std::right << attendance << "|";
 	}
 
 };
@@ -220,8 +220,8 @@ public:
 	{
 		//return Human::print(os) << " " << speciality << " " << experience;
 		return Human::print(os) << " "
-			<< std::setw(35) << std::left << speciality
-			<< std::setw(5) << std::right << experience;
+			<< std::setw(36) << std::left << speciality <<"|"
+			<< std::setw(5) << std::right << experience << "|";
 	}
 
 };
