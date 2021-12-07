@@ -1,6 +1,6 @@
-class Student:	Pinkman        ,Jessie    ,   25,Chemistry                ,WW_011    ,   90,   80;
-class Student:	Vercetti       ,Tomas     ,   30,City business            ,Vice      ,   88,   90;
-class Teacher:	White          ,Walter    ,   50,Chemistry                           ,   20;
-class Student:	Diaz           ,Ricardo   ,   55,Weapons distribution     ,Vice      ,   91,   80;
-class Graduate:	Shrader        ,Halk      ,   40,Criminalistics           ,OBN       ,   85,   90,How to catch Heisenberg;
-class Teacher:	Einsten        ,Albetr    ,  142,Astronomy                           ,  110;
+class Student:	Pinkman,       Jessie,      25,Chemistry,               WW_011,      90,   80;
+class Student:	Vercetti,      Tomas,       30,City business,           Vice,        88,   90;
+class Teacher:	White,         Walter,      50,Chemistry,                            20;
+class Student:	Diaz,          Ricardo,     55,Weapons distribution,    Vice,        91,   80;
+class Graduate:	Shrader,       Halk,        40,Criminalistics,          OBN,         85,   90,How to catch Heisenberg;
+class Teacher:	Einsten,       Albetr,     142,Astronomy,                           110;
