@@ -9,6 +9,8 @@ using std::cin;
 using std::cout;
 using std::endl;
 
+//#define FSTREAM_ALIGNMENT
+
 #define HUMAN_TAKE_PARAMETERS const std::string& last_name, const std::string& first_name, unsigned int age
 #define HUMAN_GIVE_PARAMETERS last_name, first_name, age
 
@@ -92,9 +94,18 @@ public:
 	{
 			// #include<iomanip>
 		os
-			<< std::setw(15) << std::left << last_name << ","
-			<< std::setw(10) << std::left << first_name << ","
-			<< std::setw(5) << std::right << age;
+#ifdef FSTREAM_ALIGNMENT
+			<< std::setw(15) << std::left
+#endif // FSTREAM_ALIGNMENT
+			<< last_name << ","
+#ifdef FSTREAM_ALIGNMENT
+			<< std::setw(10) << std::left
+#endif // FSTREAM_ALIGNMENT
+			<< first_name << ","
+#ifdef FSTREAM_ALIGNMENT
+			<< std::setw(5) << std::right
+#endif // FSTREAM_ALIGNMENT
+			<< age;
 		return os;
 	}
 };
@@ -181,19 +192,45 @@ public:
 	{
 		//return Human::print(os) << " " << speciality + " " + group << " " << rating << " " << attendance;
 		return Human::print(os) << " "
-			<< std::setw(25) << std::left << speciality
-			<< std::setw(10) << std::left << group
-			<< std::setw(5) << std::right << rating
-			<< std::setw(5) << std::right << attendance;
+
+			<< std::setw(25) << std::left
+
+			<< speciality
+
+			<< std::setw(10) << std::left
+
+			<< group
+
+			<< std::setw(5) << std::right
+
+			<< rating
+
+			<< std::setw(5) << std::right
+
+			<< attendance;
 	}
 	
 	std::ofstream& print(std::ofstream& os)const
 	{
 		Human::print(os) << ","
-			<< std::setw(25) << std::left << speciality << ","
-			<< std::setw(10) << std::left << group << ","
-			<< std::setw(5) << std::right << rating << ","
-			<< std::setw(5) << std::right << attendance;
+#ifdef FSTREAM_ALIGNMENT
+			<< std::setw(25) << std::left
+#endif // FSTREAM_ALIGNMENT
+
+
+			<< speciality << ","
+#ifdef FSTREAM_ALIGNMENT
+			<< std::setw(10) << std::left
+#endif // FSTREAM_ALIGNMENT
+			<< group << ","
+#ifdef FSTREAM_ALIGNMENT
+			<< std::setw(5) << std::right
+#endif // FSTREAM_ALIGNMENT
+			<< rating << ","
+#ifdef FSTREAM_ALIGNMENT
+			<< std::setw(5) << std::right
+#endif // FSTREAM_ALIGNMENT
+			<< attendance;
 		return os;
 	}
 
@@ -252,8 +289,14 @@ public:
 	std::ofstream& print(std::ofstream& os)const
 	{
 		Human::print(os) << ","
-			<< std::setw(36) << std::left << speciality <<","
-			<< std::setw(5) << std::right << experience;
+#ifdef FSTREAM_ALIGNMENT
+			<< std::setw(36) << std::left
+#endif // FSTREAM_ALIGNMENT
+			<< speciality << ","
+#ifdef FSTREAM_ALIGNMENT
+			<< std::setw(5) << std::right
+#endif // FSTREAM_ALIGNMENT
+			<< experience;
 		return os;
 	}
 
