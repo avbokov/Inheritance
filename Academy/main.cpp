@@ -314,7 +314,7 @@ void main()
 	cout << "\n--------------------------------\n";
 
 	// Specialisation
-	// Downcast - преобразование дочернего объекта в базовый класс.
+	// Downcast - преобразование базового объекта в дочерний класс.
 
 	for (int i = 0; i < sizeof(group) / sizeof(Human*); i++)
 	{
