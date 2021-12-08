@@ -57,12 +57,18 @@ public:
 		set_last_name(last_name);
 		set_first_name(first_name);
 		set_age(age);
+#ifdef DEBUG
 		cout << "HConstructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 
 	virtual ~Human()
 	{
+#ifdef DEBUG
 		cout << "HDestructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 
 	//				Methods:
@@ -182,12 +188,18 @@ public:
 		this->group = group;
 		this->rating = rating;
 		this->attendance = attendance;
+#ifdef DEBUG
 		cout << "SConstructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 
 	~Student()
 	{
+#ifdef DEBUG
 		cout << "SDestructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 
 	//				Methods:
@@ -256,12 +268,18 @@ public:
 	{
 		set_speciality(speciality);
 		set_experience(experience);
+#ifdef DEBUG
 		cout << "TConstructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 
 	~Teacher()
 	{
+#ifdef DEBUG
 		cout << "TDestructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 
 	//				Methods:
@@ -312,12 +330,18 @@ public:
 	Graduate(HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS, const std::string& subject):Student(HUMAN_GIVE_PARAMETERS, STUDENT_GIVE_PARAMETERS)
 	{
 		set_subject(subject);
+#ifdef DEBUG
 		cout << "GConstructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 
 	~Graduate()
 	{
+#ifdef DEBUG
 		cout << "GDestructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 
 	//				Methods:
