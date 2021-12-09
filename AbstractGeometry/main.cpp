@@ -1,4 +1,4 @@
-// AbstractGeometry
+п»ї// AbstractGeometry
 #include<iostream>
 #include<Windows.h>
 
@@ -16,7 +16,7 @@ namespace Geometry
 		console_yellow = 0xEE,
 		console_white = 0xFF
 	};
-	// enum (Enumeration - или перечисление) - это набор именованных констант типа 'int'
+	// enum (Enumeration - РёР»Рё РїРµСЂРµС‡РёСЃР»РµРЅРёРµ) - СЌС‚Рѕ РЅР°Р±РѕСЂ РёРјРµРЅРѕРІР°РЅРЅС‹С… РєРѕРЅСЃС‚Р°РЅС‚ С‚РёРїР° 'int'
 	class Shape
 	{
 	protected:
@@ -25,9 +25,9 @@ namespace Geometry
 		Shape(Color color) :color(color) {}
 		virtual ~Shape() {}
 
-		virtual double get_area()const = 0;			// площадь фигуры
-		virtual double get_perimeter()const = 0;	// периметр фигуры
-		virtual void draw()const = 0;				// любую фигуру можно нарисовать
+		virtual double get_area()const = 0;			// РїР»РѕС‰Р°РґСЊ С„РёРіСѓСЂС‹
+		virtual double get_perimeter()const = 0;	// РїРµСЂРёРјРµС‚СЂ С„РёРіСѓСЂС‹
+		virtual void draw()const = 0;				// Р»СЋР±СѓСЋ С„РёРіСѓСЂСѓ РјРѕР¶РЅРѕ РЅР°СЂРёСЃРѕРІР°С‚СЊ
 	};
 
 	class Square :public Shape
@@ -75,9 +75,9 @@ namespace Geometry
 		void info()
 		{
 			cout << typeid(*this).name() << endl;
-			cout << "Длина стороны:\t" << side << endl;
-			cout << "Площадь:\t" << get_area() << endl;
-			cout << "Периметр:\t" << get_perimeter() << endl;
+			cout << "Р”Р»РёРЅР° СЃС‚РѕСЂРѕРЅС‹:\t" << side << endl;
+			cout << "РџР»РѕС‰Р°РґСЊ:\t" << get_area() << endl;
+			cout << "РџРµСЂРёРјРµС‚СЂ:\t" << get_perimeter() << endl;
 			draw();
 		}
 	};
@@ -138,10 +138,10 @@ namespace Geometry
 		void info()
 		{
 			cout << typeid(*this).name() << endl;
-			cout << "Длина стороны A:\t" << side_A << endl;
-			cout << "Длина стороны B:\t" << side_B << endl;
-			cout << "Площадь:\t" << get_area() << endl;
-			cout << "Периметр:\t" << get_perimeter() << endl;
+			cout << "Р”Р»РёРЅР° СЃС‚РѕСЂРѕРЅС‹ A:\t" << side_A << endl;
+			cout << "Р”Р»РёРЅР° СЃС‚РѕСЂРѕРЅС‹ B:\t" << side_B << endl;
+			cout << "РџР»РѕС‰Р°РґСЊ:\t" << get_area() << endl;
+			cout << "РџРµСЂРёРјРµС‚СЂ:\t" << get_perimeter() << endl;
 			draw();
 		}
 	};
@@ -186,9 +186,9 @@ namespace Geometry
 		void info()
 		{
 			cout << typeid(*this).name() << endl;
-			cout << "Радиус:\t" << radius << endl;
-			cout << "Площадь:\t" << get_area() << endl;
-			cout << "Длина окружности:\t" << get_perimeter() << endl;
+			cout << "Р Р°РґРёСѓСЃ:\t" << radius << endl;
+			cout << "РџР»РѕС‰Р°РґСЊ:\t" << get_area() << endl;
+			cout << "Р”Р»РёРЅР° РѕРєСЂСѓР¶РЅРѕСЃС‚Рё:\t" << get_perimeter() << endl;
 			draw();
 		}
 	};
