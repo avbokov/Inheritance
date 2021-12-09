@@ -69,7 +69,7 @@ namespace Geometry
 				}
 				cout << endl;
 			}
-			SetConsoleTextAttribute(hConsole, console_default);
+			SetConsoleTextAttribute(hConsole, Color::console_default);
 		}
 
 		void info()
@@ -133,7 +133,7 @@ namespace Geometry
 				}
 				cout << endl;
 			}
-			SetConsoleTextAttribute(hConsole, console_default);
+			SetConsoleTextAttribute(hConsole, Color::console_default);
 		}
 		void info()
 		{
@@ -181,7 +181,7 @@ namespace Geometry
 			
 			cout << "*" << endl;
 			
-			SetConsoleTextAttribute(hConsole, console_default);
+			SetConsoleTextAttribute(hConsole, Color::console_default);
 		}
 		void info()
 		{
