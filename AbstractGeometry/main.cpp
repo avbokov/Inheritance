@@ -11,7 +11,7 @@ namespace Geometry
 	{
 		console_default = 0x07,
 		console_blue = 0x99,
-		console_green = 0xAA,
+		console_green = 0x0A,
 		console_red = 0xCC,
 		console_yellow = 0xEE,
 		console_white = 0xFF
@@ -145,7 +145,56 @@ namespace Geometry
 			draw();
 		}
 	};
+
+	class Circle : public Shape
+	{
+		double radius;
+	public:
+		double get_radius()const
+		{
+			return radius;
+		}
+		void set_radius(double radius)
+		{
+			if (radius <= 0)radius = 1;
+			this->radius = radius;
+		}
+		
+		Circle(double radius, Color color) :Shape(color)
+		{
+			set_radius(radius);
+		}
+		~Circle() {}
+
+		double get_area()const
+		{
+			return  3.14 * radius * radius;
+		}
+		double get_perimeter()const
+		{
+			return 2 * 3.14 * radius;
+		}
+		void draw()const
+		{
+			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+			SetConsoleTextAttribute(hConsole, color);
+			
+			cout << "*" << endl;
+			
+			SetConsoleTextAttribute(hConsole, console_default);
+		}
+		void info()
+		{
+			cout << typeid(*this).name() << endl;
+			cout << "Радиус:\t" << radius << endl;
+			cout << "Площадь:\t" << get_area() << endl;
+			cout << "Длина окружности:\t" << get_perimeter() << endl;
+			draw();
+		}
+	};
+
 }
+
 
 
 void main()
@@ -158,4 +207,7 @@ void main()
 
 	Geometry::Rectangle rect(5, 12, Geometry::Color::console_red);
 	rect.info();
+	
+	Geometry::Circle circ(7, Geometry::Color::console_green);
+	circ.info();
 }
