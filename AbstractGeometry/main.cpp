@@ -1,6 +1,10 @@
 ﻿// AbstractGeometry
-#include<iostream>
+#define _USE_MATH_DEFINES // должен быть в самом верху, чтобы использовать константу Пи
+
 #include<Windows.h>
+#include<iostream>
+#include<conio.h>
+#include<cmath>
 
 using namespace std;
 
@@ -9,6 +13,12 @@ namespace Geometry
 {
 	enum Color
 	{
+		red = 0x000000FF,
+		green = 0x0000FF00,
+		blue = 0x00FF0000,
+		yellow = 0x0000FFFF,
+		white = 0x00FFFFFF,
+
 		console_default = 0x07,
 		console_blue = 0x99,
 		console_green = 0x0A,
@@ -150,49 +160,148 @@ namespace Geometry
 	{
 		double radius;
 	public:
-		double get_radius()const
-		{
-			return radius;
-		}
-		void set_radius(double radius)
-		{
-			if (radius <= 0)radius = 1;
-			this->radius = radius;
-		}
-		
-		Circle(double radius, Color color) :Shape(color)
+		Circle(double radius, Color color = Color::white) :Shape(color)
 		{
 			set_radius(radius);
 		}
 		~Circle() {}
 
+		void set_radius(double radius)
+		{
+			if (radius <= 0)radius = 1;
+			this->radius = radius;
+		}
+		double get_radius()const
+		{
+			return radius;
+		}
 		double get_area()const
 		{
-			return  3.14 * radius * radius;
+			return  M_PI * radius * radius;
 		}
 		double get_perimeter()const
 		{
-			return 2 * 3.14 * radius;
+			return 2 * M_PI * radius;
 		}
 		void draw()const
 		{
-			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-			SetConsoleTextAttribute(hConsole, color);
-			
-			cout << "*" << endl;
-			
-			SetConsoleTextAttribute(hConsole, Color::console_default);
+			// GDI - Graphics Device Inerface (WinAPI)
+
+			HWND hwnd = GetConsoleWindow(); // получаем окно консоли
+			//HWND hwnd = FindWindow(NULL, L"Inheritance - Microsoft Visual Studio");
+			HDC hdc = GetDC(hwnd); // создаём контекст устройства. На этом контексте мы будем рисовать.
+
+			HPEN hPen = CreatePen(PS_SOLID, 5, color); // создаём карандаш
+			// PS_SOLID - сплошная линия
+			// 5 - это толщина линии в пикселах
+			// RGB(...) - цвет
+			HBRUSH hBrush = CreateSolidBrush(color);
+
+			//цвет занимает 4 байта, по одному на цвет и альфа-канал (прозрачность)
+
+			SelectObject(hdc, hPen); // выбираем чем и на чём будем рисовать
+			SelectObject(hdc, hBrush); // выбираем чем и на чём будем рисовать
+
+			int start_x = 300;
+			int start_y = 270;
+			/*int end_x = 400;
+			int end_y = 370;*/
+
+			Ellipse(hdc, start_x, start_y, start_x + 2 * radius, start_y + 2 * radius);
+
+			DeleteObject(hBrush);
+			DeleteObject(hPen);
+			ReleaseDC(hwnd, hdc);
 		}
-		void info()
+		void info()const
 		{
 			cout << typeid(*this).name() << endl;
-			cout << "Радиус:\t" << radius << endl;
-			cout << "Площадь:\t" << get_area() << endl;
+			cout << "Радиус кргуа:\t" << get_radius() << endl;
+			cout << "Площадь круга:\t" << get_area() << endl;
 			cout << "Длина окружности:\t" << get_perimeter() << endl;
-			draw();
+			char key;
+			do
+			{
+				draw();
+				//if (_kbhit())break; //_kbhit() ожидает нажатие кливиши и возвращает ненулево значение при ёё нажатии
+				if (key = _kbhit())key = _getch();
+			} while (key != 27);
 		}
 	};
 
+	class Triangle :public Shape
+	{
+	public:
+		Triangle(Color color = Color::white) :Shape(color) {}
+		~Triangle() {}
+		virtual double get_height()const = 0;
+	};
+
+	class EquilateralTriangle : public Triangle
+	{
+	public:
+		EquilateralTriangle(double side, Color color = Color::white) :Triangle(color)
+		{
+			set_side(side);
+		}
+		double side;
+		void set_side(double side)
+		{
+			if (side <= 0)side = 1;
+			this->side = side;
+		}
+		double get_side()const
+		{
+			return side;
+		}
+		double get_height()const
+		{
+			return sqrt(side * side - pow(side / 2, 2));
+		}
+		double get_area()const
+		{
+			return side * get_height() / 2;
+		}
+		double get_perimeter()const
+		{
+			return 3 * side;
+		}
+		void draw()const
+		{
+			HWND hwnd = GetConsoleWindow();
+			HDC hdc = GetDC(hwnd);
+			HPEN hPen = CreatePen(PS_SOLID, 5, color);
+			HBRUSH hBrush = CreateSolidBrush(color);
+			SelectObject(hdc, hPen);
+			SelectObject(hdc, hBrush);
+			int start_x = 400;
+			int start_y = 200;
+			const POINT verticies[] =
+			{
+				{start_x, start_y + side},
+				{start_x + side, start_y + side},
+				{start_x + side / 2, start_y + side - get_height()},
+			};
+
+			Polygon(hdc, verticies, sizeof(verticies) / sizeof(POINT));
+
+			DeleteObject(hBrush);
+			DeleteObject(hPen);
+			ReleaseDC(hwnd, hdc);
+		}
+		void info()const
+		{
+			cout << typeid(*this).name() << endl;
+			cout << "Длина стороны: " << get_side() << endl;
+			cout << "Высота треугольника: " << get_height() << endl;
+			cout << "Площадь треугольника: " << get_area() << endl;
+			cout << "Периметр треугольника: " << get_perimeter() << endl;
+			while (true)
+			{
+				draw();
+			}
+		}
+	};
 }
 
 
@@ -207,7 +316,10 @@ void main()
 
 	Geometry::Rectangle rect(5, 12, Geometry::Color::console_red);
 	rect.info();
-	
-	Geometry::Circle circ(7, Geometry::Color::console_green);
+
+	Geometry::Circle circ(200, Geometry::Color::yellow);
 	circ.info();
+
+	Geometry::EquilateralTriangle et(200, Geometry::Color::green);
+	et.info();
 }
