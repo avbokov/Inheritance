@@ -5,6 +5,7 @@
 #include<iostream>
 #include<conio.h>
 #include<cmath>
+#include<thread>
 
 using namespace std;
 
@@ -74,6 +75,14 @@ namespace Geometry
 		virtual double get_area()const = 0;			// площадь фигуры
 		virtual double get_perimeter()const = 0;	// периметр фигуры
 		virtual void draw()const = 0;				// любую фигуру можно нарисовать
+
+		void call_draw()const
+		{
+			while (true)
+			{
+				draw();
+			}
+		}
 	};
 
 	class Square :public Shape
@@ -144,13 +153,16 @@ namespace Geometry
 			cout << "Длина стороны:\t" << side << endl;
 			cout << "Площадь:\t" << get_area() << endl;
 			cout << "Периметр:\t" << get_perimeter() << endl;
-			char key = 0;
+			/*char key = 0;
 			while (key != 27)
 			{
 				draw();
 				if (_kbhit())key = _getch();
-			}
+			}*/
+			std::thread draw_thread(&Shape::call_draw, this);
+			draw_thread.detach();
 		}
+		
 	};
 
 	class Rectangle : public Shape
@@ -281,13 +293,16 @@ namespace Geometry
 			cout << "Площадь круга:\t" << get_area() << endl;
 			cout << "Длина окружности:\t" << get_perimeter() << endl;
 			char key;
-			do
-			{
-				draw();
-				//if (_kbhit())break; //_kbhit() ожидает нажатие кливиши и возвращает ненулевое значение при ёё нажатии
-				if (key = _kbhit())key = _getch();
-			} while (key != 27);
+			//do
+			//{
+			//	draw();
+			//	//if (_kbhit())break; //_kbhit() ожидает нажатие кливиши и возвращает ненулевое значение при ёё нажатии
+			//	if (key = _kbhit())key = _getch();
+			//} while (key != 27);
+			std::thread draw_thread(&Shape::call_draw, this);
+			draw_thread.detach();
 		}
+		
 	};
 
 	class Triangle :public Shape
@@ -358,13 +373,16 @@ namespace Geometry
 			cout << "Площадь треугольника: " << get_area() << endl;
 			cout << "Периметр треугольника: " << get_perimeter() << endl;
 			char key;
-			do
-			{
-				draw();
-				//if (_kbhit())break; //_kbhit() ожидает нажатие кливиши и возвращает ненулевое значение при ёё нажатии
-				if (key = _kbhit())key = _getch();
-			} while (key != 27);
+			//do
+			//{
+			//	draw();
+			//	//if (_kbhit())break; //_kbhit() ожидает нажатие кливиши и возвращает ненулевое значение при ёё нажатии
+			//	if (key = _kbhit())key = _getch();
+			//} while (key != 27);
+			std::thread draw_thread(&Shape::call_draw, this);
+			draw_thread.detach();
 		}
+		
 	};
 
 	class IsoscelesTriangle : public Triangle
