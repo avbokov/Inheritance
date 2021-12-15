@@ -223,7 +223,7 @@ namespace Geometry
 			do
 			{
 				draw();
-				//if (_kbhit())break; //_kbhit() ожидает нажатие кливиши и возвращает ненулево значение при ёё нажатии
+				//if (_kbhit())break; //_kbhit() ожидает нажатие кливиши и возвращает ненулевое значение при ёё нажатии
 				if (key = _kbhit())key = _getch();
 			} while (key != 27);
 		}
@@ -239,12 +239,12 @@ namespace Geometry
 
 	class EquilateralTriangle : public Triangle
 	{
+		double side;
 	public:
 		EquilateralTriangle(double side, Color color = Color::white) :Triangle(color)
 		{
 			set_side(side);
 		}
-		double side;
 		void set_side(double side)
 		{
 			if (side <= 0)side = 1;
@@ -296,6 +296,87 @@ namespace Geometry
 			cout << "Высота треугольника: " << get_height() << endl;
 			cout << "Площадь треугольника: " << get_area() << endl;
 			cout << "Периметр треугольника: " << get_perimeter() << endl;
+			char key;
+			do
+			{
+				draw();
+				//if (_kbhit())break; //_kbhit() ожидает нажатие кливиши и возвращает ненулевое значение при ёё нажатии
+				if (key = _kbhit())key = _getch();
+			} while (key != 27);
+		}
+	};
+
+	class IsoscelesTriangle : public Triangle
+	{
+		double side;
+		double base;
+	public:
+		IsoscelesTriangle(double side, double base, Color color = Color::white) :Triangle(color)
+		{
+			set_side(side);
+			set_base(base);
+		}
+		void set_side(double side)
+		{
+			if (side <= 0)side = 1;
+			this->side = side;
+		}
+		void set_base(double base)
+		{
+			if (base <= 0)base = 1;
+			this->base = base;
+		}
+		double get_side()const
+		{
+			return side;
+		}
+		double get_base()const
+		{
+			return base;
+		}
+		double get_height()const
+		{
+			return sqrt(side * side - pow(base / 2, 2));
+		}
+		double get_area()const
+		{
+			return base * get_height() / 2;
+		}
+		double get_perimeter()const
+		{
+			return 2 * side + base;
+		}
+		void draw()const
+		{
+			HWND hwnd = GetConsoleWindow();
+			HDC hdc = GetDC(hwnd);
+			HPEN hPen = CreatePen(PS_SOLID, 5, color);
+			HBRUSH hBrush = CreateSolidBrush(color);
+			SelectObject(hdc, hPen);
+			SelectObject(hdc, hBrush);
+			int start_x = 600;
+			int start_y = 400;
+			const POINT verticies[] =
+			{
+				{start_x, start_y + side},
+				{start_x + base, start_y + side},
+				{start_x + base / 2, start_y + side - get_height()},
+			};
+
+			Polygon(hdc, verticies, sizeof(verticies) / sizeof(POINT));
+
+			DeleteObject(hBrush);
+			DeleteObject(hPen);
+			ReleaseDC(hwnd, hdc);
+		}
+		void info()const
+		{
+			cout << typeid(*this).name() << endl;
+			cout << "Длина стороны: " << get_side() << endl;
+			cout << "Длина основания: " << get_base() << endl;
+			cout << "Высота треугольника: " << get_height() << endl;
+			cout << "Площадь треугольника: " << get_area() << endl;
+			cout << "Периметр треугольника: " << get_perimeter() << endl;
 			while (true)
 			{
 				draw();
@@ -322,4 +403,7 @@ void main()
 
 	Geometry::EquilateralTriangle et(200, Geometry::Color::green);
 	et.info();
+	
+	Geometry::IsoscelesTriangle it(200, 100, Geometry::Color::blue);
+	it.info();
 }
