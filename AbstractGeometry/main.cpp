@@ -43,14 +43,24 @@ namespace Geometry
 		}
 		void set_start_x(unsigned int start_x)
 		{
+			HWND hwnd = GetConsoleWindow();
+			RECT rect;
+			GetWindowRect(hwnd, &rect);
+
 			if (start_x < 400) start_x = 400;
-			if (start_x > 800) start_x = 800;
+			//if (start_x > 800) start_x = 800;
+			if (start_x > (rect.right - rect.left)/2) start_x = (rect.right - rect.left)/2;
 			this->start_x = start_x;
 		}
 		void set_start_y(unsigned int start_y)
 		{
+			HWND hwnd = GetConsoleWindow();
+			RECT rect;
+			GetWindowRect(hwnd, &rect);
+
 			if (start_y < 100) start_y = 100;
-			if (start_y > 500) start_y = 500;
+			//if (start_y > 500) start_y = 500;
+			if (start_y > (rect.bottom - rect.top)*.5) start_y = (rect.bottom - rect.top)*.5;
 			this->start_y = start_y;
 		}
 		Shape(Color color, unsigned int line_width, unsigned int start_x, unsigned int start_y) :color(color)
@@ -76,7 +86,8 @@ namespace Geometry
 		}
 		void set_side(double side)
 		{
-			if (side <= 0) side = 1;
+			if (side <= 10) side = 10;
+			if (side < line_width)set_line_width(side);
 			this->side = side;
 		}
 		Square(double side, Color color = Color::white, unsigned int line_width = 5, unsigned int start_x = 400, unsigned int start_y = 100) :Shape(color, line_width, start_x, start_y)
@@ -442,7 +453,7 @@ void main()
 	setlocale(LC_ALL, "");
 
 	//Shape shape(Color::console_blue);
-	Geometry::Square square(150, Geometry::Color::console_blue);
+	Geometry::Square square(10, Geometry::Color::console_blue, 100, 3000, 4000);
 	square.info();
 
 	Geometry::Rectangle rect(5, 12, Geometry::Color::console_red);
