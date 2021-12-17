@@ -194,6 +194,7 @@ namespace Geometry
 		}
 		void draw()const
 		{
+#ifdef CONSOLE_DRAWING
 			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 			SetConsoleTextAttribute(hConsole, color);
 			for (int i = 0; i < side_A; i++)
@@ -205,7 +206,25 @@ namespace Geometry
 				cout << endl;
 			}
 			SetConsoleTextAttribute(hConsole, Color::console_default);
+#endif // CONSOLE_DRAWING
+			HWND hwnd = GetConsoleWindow();
+			HDC hdc = GetDC(hwnd);
+
+			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+			HBRUSH hBrush = CreateSolidBrush(color);
+
+			SelectObject(hdc, hPen);
+			SelectObject(hdc, hBrush);
+
+			/*int start_x = 400;
+			int start_y = 130;*/
+			::Rectangle(hdc, start_x, start_y, start_x + side_B, start_y + side_A);
+
+			DeleteObject(hPen);
+			DeleteObject(hBrush);
+			ReleaseDC(hwnd, hdc);
 		}
+
 		void info()
 		{
 			cout << typeid(*this).name() << endl;
@@ -213,7 +232,12 @@ namespace Geometry
 			cout << "Длина стороны B:\t" << side_B << endl;
 			cout << "Площадь:\t" << get_area() << endl;
 			cout << "Периметр:\t" << get_perimeter() << endl;
-			draw();
+			char key = 0;
+			while (key != 27)
+			{
+				draw();
+				if (_kbhit())key = _getch();
+			}
 		}
 	};
 
@@ -438,6 +462,91 @@ namespace Geometry
 			cout << "Высота треугольника: " << get_height() << endl;
 			cout << "Площадь треугольника: " << get_area() << endl;
 			cout << "Периметр треугольника: " << get_perimeter() << endl;
+			char key;
+			do
+			{
+				draw();
+				//if (_kbhit())break; //_kbhit() ожидает нажатие кливиши и возвращает ненулевое значение при ёё нажатии
+				if (key = _kbhit())key = _getch();
+			} while (key != 27);
+		}
+	};
+
+	class RightTriangle :public Triangle
+	{
+		double katet_1;
+		double katet_2;
+	public:
+		RightTriangle(double katet_1, double katet_2, Color color = Color::white, unsigned int line_width = 5, unsigned int start_x = 400, unsigned int start_y = 100) :Triangle(color, line_width, start_x, start_y)
+		{
+			set_katet_1(katet_1);
+			set_katet_2(katet_2);
+		}
+		void set_katet_1(double katet_1)
+		{
+			if (katet_1 <= 0)katet_1 = 1;
+			this->katet_1 = katet_1;
+		}
+		void set_katet_2(double katet_2)
+		{
+			if (katet_2 <= 0)katet_2 = 1;
+			this->katet_2 = katet_2;
+		}
+		double get_height()const
+		{
+			return (2 * get_area()) / get_hypotenuse();
+		}
+		double get_katet_1()const
+		{
+			return katet_1;
+		}
+		double get_katet_2()const
+		{
+			return katet_2;
+		}
+		double get_hypotenuse()const
+		{
+			return sqrt(katet_1 * katet_1 + katet_2 * katet_2);
+		}
+		double get_area()const
+		{
+			return (katet_1 * katet_2) / 2;
+		}
+		double get_perimeter()const
+		{
+			return katet_1 + katet_2 + sqrt(katet_1 * katet_1 + katet_2 * katet_2);
+		}
+		void draw()const
+		{
+			HWND hwnd = GetConsoleWindow();
+			HDC hdc = GetDC(hwnd);
+			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+			HBRUSH hBrush = CreateSolidBrush(color);
+			SelectObject(hdc, hPen);
+			SelectObject(hdc, hBrush);
+			/*int start_x = 600;
+			int start_y = 400;*/
+			const POINT verticies[] =
+			{
+				{start_x, start_y},
+				{start_x , start_y + katet_1},
+				{start_x + katet_2, start_y + katet_1},
+			};
+
+			Polygon(hdc, verticies, sizeof(verticies) / sizeof(POINT));
+
+			DeleteObject(hBrush);
+			DeleteObject(hPen);
+			ReleaseDC(hwnd, hdc);
+		}
+		void info()const
+		{
+			cout << typeid(*this).name() << endl;
+			cout << "Длина первого катета: " << get_katet_1() << endl;
+			cout << "Длина второго катета: " << get_katet_2() << endl;
+			cout << "Гипотенуза треугольника: " << get_hypotenuse() << endl;
+			cout << "Площадь треугольника: " << get_area() << endl;
+			cout << "Периметр треугольника: " << get_perimeter() << endl;
 			while (true)
 			{
 				draw();
@@ -453,18 +562,21 @@ void main()
 	setlocale(LC_ALL, "");
 
 	//Shape shape(Color::console_blue);
-	Geometry::Square square(10, Geometry::Color::console_blue, 100, 3000, 4000);
+	Geometry::Square square(100, Geometry::Color::console_blue);
 	square.info();
 
-	Geometry::Rectangle rect(5, 12, Geometry::Color::console_red);
+	Geometry::Rectangle rect(20, 30, Geometry::Color::console_red, 50);
 	rect.info();
 
-	Geometry::Circle circ(200, Geometry::Color::yellow);
+	Geometry::Circle circ(100, Geometry::Color::yellow);
 	circ.info();
 
-	Geometry::EquilateralTriangle et(200, Geometry::Color::green, 120, 200, 50);
+	Geometry::EquilateralTriangle et(200, Geometry::Color::green, 50, 200, 50);
 	et.info();
 	
-	Geometry::IsoscelesTriangle it(200, 100, Geometry::Color::blue, 50);
+	Geometry::IsoscelesTriangle it(200, 100, Geometry::Color::blue, 50, 200, 150);
 	it.info();
+	
+	Geometry::RightTriangle rt(200, 100, Geometry::Color::red, 50, 200, 400);
+	rt.info();
 }
