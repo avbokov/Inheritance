@@ -492,7 +492,7 @@ namespace Geometry
 			if (katet_2 <= 0)katet_2 = 1;
 			this->katet_2 = katet_2;
 		}
-		double get_height()const
+		double get_height()const // более интересна высота именно к гипотенузе, её хотя бы можно считать ))
 		{
 			return (2 * get_area()) / get_hypotenuse();
 		}
